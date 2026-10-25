@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ⚠️ Meta Pixel Code યહાં પેસ્ટ કરો (તમારા Pixel ID સાથે) -->
+<!-- End Meta Pixel Code -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Duggal Trades 📈 · Stock Market</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;-webkit-tap-highlight-color:transparent;}
+html,body{width:100%;min-height:100vh;min-height:100dvh;overflow-x:hidden;}
+
+body{
+  background:#060a14;
+  color:#fff;
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+/* Background Glow */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(16, 185, 129, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 85% 90%, rgba(251, 191, 36, 0.1) 0%, transparent 45%);
+  z-index:0;
+  pointer-events:none;
+}
+
+.grid-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(ellipse at center, #000 20%, transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse at center, #000 20%, transparent 70%);
+  pointer-events:none;
+}
+
+/* Main Card */
+.card-wrap{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:100%;
+  min-height:100vh;
+  min-height:100dvh;
+  background:linear-gradient(180deg, #0a0f1d 0%, #070b16 100%);
+  display:flex;
+  flex-direction:column;
+}
+
+.card{
+  padding:32px 22px 30px;
+  padding-top:max(32px, env(safe-area-inset-top));
+  padding-bottom:max(30px, env(safe-area-inset-bottom));
+  text-align:center;
+  position:relative;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+.card::before{
+  content:'';
+  position:absolute;
+  top:0; left:15%; right:15%;
+  height:2px;
+  background:linear-gradient(90deg, transparent, #fbbf24, transparent);
+}
+
+/* Top Bar */
+.top-bar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin-bottom:24px;
+  flex-wrap:wrap;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 14px;
+  background:rgba(251, 191, 36, 0.08);
+  border:1px solid rgba(251, 191, 36, 0.25);
+  border-radius:30px;
+  font-family:'Outfit',sans-serif;
+  font-size:10px;
+  font-weight:700;
+  color:#fbbf24;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.badge-dot{
+  width:6px; height:6px;
+  border-radius:50%;
+  background:#fbbf24;
+  box-shadow:0 0 10px #fbbf24;
+  animation:blink 1.5s ease infinite;
+}
+
+.live-counter{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 12px;
+  background:rgba(16,185,129,0.08);
+  border:1px solid rgba(16,185,129,0.2);
+  border-radius:30px;
+  font-family:'Outfit',sans-serif;
+  font-size:10px;
+  font-weight:600;
+  color:#4ade80;
+}
+
+.live-counter .count{ font-weight:800; color:#fff; }
+
+@keyframes blink{
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:0.4;transform:scale(0.7);}
+}
+
+/* Avatar */
+.avatar-wrap{
+  position:relative;
+  width:110px;
+  height:110px;
+  margin:0 auto 20px;
+}
+
+.avatar-glow{
+  position:absolute;
+  inset:-15px;
+  background:radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, transparent 70%);
+  border-radius:50%;
+  filter:blur(18px);
+  animation:glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse{
+  0%,100%{opacity:0.6;transform:scale(1);}
+  50%{opacity:1;transform:scale(1.1);}
+}
+
+.avatar-ring{
+  position:absolute;
+  inset:-5px;
+  border-radius:50%;
+  background:conic-gradient(from 0deg, #fbbf24, #10b981, #fbbf24, #10b981, #fbbf24);
+  animation:spin 6s linear infinite;
+  z-index:0;
+}
+
+@keyframes spin{100%{transform:rotate(360deg);}}
+
+.avatar{
+  position:relative;
+  z-index:1;
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid #0a0f1d;
+  background:#0f1626;
+  display:block;
+}
+
+.online-dot{
+  position:absolute;
+  bottom:4px; right:4px;
+  width:22px; height:22px;
+  background:#22c55e;
+  border:3px solid #0a0f1d;
+  border-radius:50%;
+  z-index:2;
+  box-shadow:0 0 15px rgba(34,197,94,0.8);
+}
+
+/* Title */
+h1{
+  font-family:'Outfit',sans-serif;
+  font-size:22px;
+  font-weight:800;
+  line-height:1.3;
+  letter-spacing:-0.3px;
+  margin-bottom:10px;
+  background:linear-gradient(135deg, #ffffff 0%, #fbbf24 60%, #d97706 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.sub-title{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:'Outfit',sans-serif;
+  font-size:10.5px;
+  font-weight:700;
+  color:#94a3b8;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+
+.sub-title::before,
+.sub-title::after{
+  content:'';
+  width:16px; height:1px;
+  background:rgba(255,255,255,0.2);
+}
+
+.desc{
+  font-size:13px;
+  color:#94a3b8;
+  line-height:1.6;
+  margin-bottom:24px;
+  padding:0 8px;
+}
+
+.desc strong{color:#fbbf24;font-weight:700;}
+
+/* CTA Button */
+.btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  padding:18px 20px;
+  background:linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color:#ffffff;
+  font-family:'Outfit',sans-serif;
+  font-weight:800;
+  font-size:15px;
+  border-radius:14px;
+  letter-spacing:0.5px;
+  margin-bottom:16px;
+  position:relative;
+  overflow:hidden;
+  transition:all 0.3s ease;
+  box-shadow:0 10px 30px rgba(34,197,94,0.3);
+  cursor:pointer;
+  border:none;
+  min-height:56px;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 15px 40px rgba(34,197,94,0.5);
+}
+
+.btn:active{transform:translateY(0) scale(0.98);}
+.btn svg{width:22px;height:22px;fill:currentColor;}
+
+.btn.loading{pointer-events:none;opacity:0.8;color:transparent;}
+.btn.loading svg{display:none;}
+.btn.loading::after{
+  content:'';
+  width:18px; height:18px;
+  border:2px solid rgba(255,255,255,0.3);
+  border-top-color:#fff;
+  border-radius:50%;
+  animation:spin 0.8s linear infinite;
+  position:absolute;
+}
+
+/* Stats */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:rgba(251,191,36,0.15);
+  border:1px solid rgba(251,191,36,0.15);
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:24px;
+}
+
+.stat{
+  background:#0a0f1d;
+  padding:14px 4px;
+  text-align:center;
+}
+
+.stat-num{
+  font-family:'Outfit',sans-serif;
+  font-size:14px;
+  font-weight:800;
+  color:#fbbf24;
+  line-height:1;
+  margin-bottom:4px;
+  display:block;
+}
+
+.stat-lbl{
+  font-size:8px;
+  color:#64748b;
+  font-weight:600;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+}
+
+/* Section Title */
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:24px 0 14px;
+  font-family:'Outfit',sans-serif;
+  font-size:10px;
+  font-weight:800;
+  color:#fbbf24;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.section-title::before,
+.section-title::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.3), transparent);
+}
+
+/* Features */
+.features{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:8px;
+}
+
+.feature{
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:12px;
+  padding:14px 10px;
+  text-align:center;
+  transition:0.3s;
+}
+
+.feature:hover{
+  border-color:rgba(251, 191, 36, 0.3);
+  background:rgba(251, 191, 36, 0.04);
+  transform:translateY(-2px);
+}
+
+.feature-icon{font-size:20px;margin-bottom:6px;display:block;}
+.feature-title{font-size:11.5px;font-weight:700;color:#fff;margin-bottom:3px;line-height:1.3;}
+.feature-desc{font-size:9px;color:#64748b;font-weight:500;line-height:1.3;}
+
+/* Learnings */
+.learn-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  text-align:left;
+  margin-bottom:8px;
+}
+
+.learn-item{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:12px 14px;
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:10px;
+  font-size:12px;
+  color:#cbd5e1;
+  line-height:1.5;
+  transition:0.3s;
+}
+
+.learn-item:hover{
+  border-color:rgba(251, 191, 36, 0.2);
+  background:rgba(251, 191, 36, 0.04);
+}
+
+.learn-item .num{
+  width:22px; height:22px;
+  background:rgba(251, 191, 36, 0.15);
+  border:1px solid rgba(251, 191, 36, 0.35);
+  border-radius:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fbbf24;
+  font-family:'Outfit',sans-serif;
+  font-size:11px;
+  font-weight:800;
+  flex-shrink:0;
+}
+
+/* Testimonials */
+.testimonials{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom:8px;
+}
+
+.testi{
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.05);
+  border-left:3px solid #10b981;
+  border-radius:8px;
+  padding:12px 14px;
+  text-align:left;
+}
+
+.testi-stars{color:#fbbf24;font-size:10px;letter-spacing:2px;margin-bottom:6px;}
+.testi-text{font-size:11.5px;color:#cbd5e1;line-height:1.5;margin-bottom:6px;font-style:italic;}
+.testi-author{font-size:10px;color:#10b981;font-weight:700;}
+
+/* FAQ */
+.faq-list{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:8px;
+}
+
+.faq-item{
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:10px;
+  overflow:hidden;
+  text-align:left;
+}
+
+.faq-item[open]{
+  border-color:rgba(251, 191, 36, 0.3);
+  background:rgba(251, 191, 36, 0.04);
+}
+
+.faq-q{
+  padding:12px 14px;
+  font-size:12px;
+  font-weight:700;
+  color:#fff;
+  cursor:pointer;
+  list-style:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.faq-q::-webkit-details-marker{display:none;}
+
+.faq-q::after{
+  content:'+';
+  font-size:16px;
+  font-weight:700;
+  color:#fbbf24;
+  transition:transform 0.3s ease;
+  flex-shrink:0;
+}
+
+.faq-item[open] .faq-q::after{transform:rotate(45deg);}
+
+.faq-a{
+  padding:0 14px 12px;
+  font-size:11px;
+  color:#94a3b8;
+  line-height:1.5;
+}
+
+/* Timer */
+.timer{
+  padding:14px;
+  margin-bottom:16px;
+  background:rgba(251, 191, 36, 0.05);
+  border:1px dashed rgba(251, 191, 36, 0.3);
+  border-radius:12px;
+  font-family:'Outfit',sans-serif;
+  font-size:11px;
+  color:#fbbf24;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+
+.pulse-dot{
+  width:6px; height:6px;
+  background:#fbbf24;
+  border-radius:50%;
+  box-shadow:0 0 10px #fbbf24;
+  animation:blink 1.2s infinite;
+}
+
+.risk{font-size:10px;color:#475569;line-height:1.5;padding:0 8px;margin-bottom:20px;}
+
+/* Footer */
+.footer{
+  margin-top:auto;
+  padding-top:20px;
+  border-top:1px solid rgba(255,255,255,0.05);
+  font-family:'Outfit',sans-serif;
+  font-size:10px;
+  color:#475569;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.footer a{
+  color:#fbbf24;text-decoration:none;font-weight:700;
+  padding:6px 16px;border:1px solid rgba(251, 191, 36, 0.2);
+  border-radius:30px;background:rgba(251, 191, 36, 0.05);
+  transition:all 0.3s;display:inline-block;margin-top:8px;
+}
+
+.footer a:hover{background:rgba(251, 191, 36, 0.15);border-color:rgba(251, 191, 36, 0.5);}
+
+.hp-field{position:absolute !important;left:-9999px !important;opacity:0 !important;pointer-events:none !important;}
+
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:#1e293b;border:1px solid rgba(251, 191, 36, 0.4);
+  color:#fff;padding:14px 22px;border-radius:10px;font-size:13px;font-weight:600;
+  z-index:9999;transition:transform 0.4s ease;box-shadow:0 20px 40px rgba(0,0,0,0.6);
+  max-width:90%;text-align:center;
+}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+@media (min-width:520px){
+  body{padding:20px;align-items:center;}
+  .card-wrap{
+    max-width:460px;min-height:auto;border-radius:32px;overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,0.8), 0 0 60px rgba(251, 191, 36, 0.1);
+    padding:2px;
+    background:linear-gradient(135deg, rgba(251, 191, 36, 0.5), rgba(16, 185, 129, 0.4), rgba(251, 191, 36, 0.5));
+    background-size:200% 200%;animation:borderFlow 6s ease infinite;
+  }
+  @keyframes borderFlow{
+    0%,100%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+  }
+  .card{
+    border-radius:30px;
+    background:linear-gradient(180deg, #0a0f1d 0%, #070b16 100%);
+    min-height:auto;padding:36px 26px 30px;
+  }
+}
+
+@media (max-width:380px){
+  .card{padding:26px 16px 24px;}
+  h1{font-size:18px;}
+  .avatar-wrap, .avatar{width:100px;height:100px;}
+  .btn{font-size:13.5px;padding:16px;min-height:52px;}
+  .stat-num{font-size:12px;}
+  .desc{font-size:12px;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="grid-bg"></div>
+
+<div class="card-wrap">
+<div class="card">
+
+  <div class="top-bar">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Verified Channel
+    </div>
+    <div class="live-counter">
+      <span style="width:5px;height:5px;background:#4ade80;border-radius:50%;box-shadow:0 0 5px #4ade80;"></span>
+      <span class="count" id="live-count">18</span> joining now
+    </div>
+  </div>
+
+  <div class="avatar-wrap">
+    <div class="avatar-glow"></div>
+    <div class="avatar-ring"></div>
+    <img class="avatar" src="https://i.ibb.co/gZJK7dTd/Ry9ts-WQvwy-Tp7ox-GTxvgg93el-S61lk3mi-YEq-K82-YFYpi-NMUPrbkz-WFk7-ld-Wvt-E9bw-Az3dctt-Z-YKz34-LNTt-SJq.jpg" alt="Duggal Trades">
+    <span class="online-dot"></span>
+  </div>
+
+  <h1>Duggal Trades 📈</h1>
+  <div class="sub-title">NIFTY · BANKNIFTY · OPTIONS</div>
+
+  <p class="desc">
+    Daily <strong>Intraday Trading Signals</strong> & Market Analysis — Trusted by thousands of traders
+  </p>
+
+  <input type="text" name="website_url" class="hp-field" id="hp_field" tabindex="-1" autocomplete="off">
+
+  <button type="button" class="btn" id="joinBtn1" onclick="secureJoin(event)">
+    <svg viewBox="0 0 24 24">
+      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+    </svg>
+    Join Free Telegram Channel
+  </button>
+
+  <div class="stats">
+    <div class="stat"><span class="stat-num">5K+</span><span class="stat-lbl">Traders</span></div>
+    <div class="stat"><span class="stat-num">5-7</span><span class="stat-lbl">Daily</span></div>
+    <div class="stat"><span class="stat-num">24/7</span><span class="stat-lbl">Live</span></div>
+    <div class="stat"><span class="stat-num">Free</span><span class="stat-lbl">Access</span></div>
+  </div>
+
+  <div class="section-title">What You Get</div>
+
+  <div class="features">
+    <div class="feature"><span class="feature-icon">📊</span><div class="feature-title">Intraday Trades</div><div class="feature-desc">High Probability</div></div>
+    <div class="feature"><span class="feature-icon">🎯</span><div class="feature-title">Exact Levels</div><div class="feature-desc">Entry · SL · Target</div></div>
+    <div class="feature"><span class="feature-icon">📚</span><div class="feature-title">Beginner Help</div><div class="feature-desc">Friendly Guidance</div></div>
+    <div class="feature"><span class="feature-icon">⚡</span><div class="feature-title">Live Updates</div><div class="feature-desc">Real-time Market</div></div>
+  </div>
+
+  <div class="section-title">What You'll Learn</div>
+
+  <div class="learn-list">
+    <div class="learn-item"><span class="num">01</span><span>How to read Nifty & BankNifty charts easily</span></div>
+    <div class="learn-item"><span class="num">02</span><span>Entry, stop-loss and target placement rules</span></div>
+    <div class="learn-item"><span class="num">03</span><span>Risk management to protect your capital</span></div>
+  </div>
+
+  <div class="section-title">Trader Reviews</div>
+
+  <div class="testimonials">
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Very clear analysis every morning. The entry and target are explained perfectly."</div>
+      <div class="testi-author">— Rajesh K. · Delhi</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Best channel for options trading. No fake promises, just pure market analysis."</div>
+      <div class="testi-author">— Simran M. · Punjab</div>
+    </div>
+  </div>
+
+  <div class="section-title">Common Questions</div>
+
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary class="faq-q">Is this channel really free?</summary>
+      <div class="faq-a">Yes, 100% free. No subscription, no hidden charges. Just join and start learning.</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Do I need trading experience?</summary>
+      <div class="faq-a">Not at all. Content is beginner-friendly with simple explanations.</div>
+    </details>
+  </div>
+
+  <button type="button" class="btn" id="joinBtn2" onclick="secureJoin(event)">
+    <svg viewBox="0 0 24 24">
+      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+    </svg>
+    Join Free Telegram Channel
+  </button>
+
+  <div class="timer">
+    <span class="pulse-dot"></span>
+    Free Access Closing Soon
+  </div>
+
+  <p class="risk">⚠ Market investments are subject to risk. Educational content only.</p>
+
+  <div class="footer">
+    Powered by<br>
+    <a href="https://t.me/+CKzXLc93ze44MTdl" target="_blank" rel="noopener">
+      @amitgrowthagency
+    </a>
+  </div>
+
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function() {
+  'use strict';
+
+  const TELEGRAM_URL = 'https://t.me/+f9zU8xC1ZKpiNzdl';
+  const MIN_TIME = 3000;
+  const COOLDOWN = 30000;
+  const STORAGE_KEY = 'duggal_trades_v1';
+  const RAPID = 900;
+
+  let pageLoad = Date.now();
+  let mouseMoved = false;
+  let lastClick = 0;
+
+  const liveCountEl = document.getElementById('live-count');
+  setInterval(() => {
+    let current = parseInt(liveCountEl.textContent);
+    let change = Math.floor(Math.random() * 5) - 2;
+    let next = current + change;
+    if (next < 8) next = 8;
+    if (next > 25) next = 25;
+    liveCountEl.textContent = next;
+  }, 4000);
+
+  function isBot(){
+    const ua = (navigator.userAgent||'').toLowerCase();
+    const sigs = ['headless','puppeteer','phantomjs','selenium','crawl','spider','curl','wget','python-requests','go-http-client','bot','slurp'];
+    for (let s of sigs) if (ua.indexOf(s) !== -1) return true;
+    if (navigator.webdriver) return true;
+    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 2) return true;
+    return false;
+  }
+
+  document.addEventListener('mousemove', () => mouseMoved = true, {once:true});
+  document.addEventListener('touchstart', () => mouseMoved = true, {once:true});
+  document.addEventListener('scroll', () => mouseMoved = true, {once:true, passive:true});
+
+  function toast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  function pixel(){
+    if (typeof fbq === 'function') {
+      try { fbq('track', 'Subscribe', {}, {eventID:'sub_'+Date.now()}); } catch(e){}
+    }
+  }
+
+  window.secureJoin = function(e){
+    if (e) e.preventDefault();
+    const now = Date.now();
+    const t = now - pageLoad;
+
+    if (now - lastClick < RAPID) return false;
+
+    const hp = document.getElementById('hp_field');
+    if (hp && hp.value !== '') return false;
+
+    if (isBot()) { toast('⚠️ Access denied'); return false; }
+
+    if (t < MIN_TIME) {
+      toast('⏳ Please wait ' + Math.ceil((MIN_TIME-t)/1000) + 's');
+      return false;
+    }
+
+    if (!mouseMoved) {
+      toast('⚠️ Please interact with the page first');
+      return false;
+    }
+
+    try {
+      const ls = parseInt(localStorage.getItem(STORAGE_KEY)||'0',10);
+      if (now - ls < COOLDOWN) {
+        toast('⏳ Please wait ' + Math.ceil((COOLDOWN-(now-ls))/1000) + 's');
+        return false;
+      }
+    } catch(e){}
+
+    lastClick = now;
+    try { localStorage.setItem(STORAGE_KEY, String(now)); } catch(e){}
+
+    const b1 = document.getElementById('joinBtn1');
+    const b2 = document.getElementById('joinBtn2');
+    
+    const originalText = b1.innerHTML;
+    b1.innerHTML = 'Connecting...';
+    b2.innerHTML = 'Connecting...';
+    b1.classList.add('loading');
+    b2.classList.add('loading');
+
+    pixel();
+
+    setTimeout(() => {
+      window.open(TELEGRAM_URL, '_blank', 'noopener,noreferrer');
+      setTimeout(() => {
+        b1.classList.remove('loading');
+        b2.classList.remove('loading');
+        b1.innerHTML = originalText;
+        b2.innerHTML = originalText;
+      }, 2000);
+    }, 800);
+
+    return false;
+  };
+
+})();
+</script>
+
+</body>
+</html>
